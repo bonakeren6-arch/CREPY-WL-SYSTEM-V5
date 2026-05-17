@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roblox Whitelist Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">RL</div>
+        <div>
+          <h1>Roblox Whitelist</h1>
+          <p>Manage script, whitelist, and logs.</p>
+        </div>
+      </div>
+      <nav class="nav-menu">
+        <button data-section="dashboard" class="active">Dashboard</button>
+        <button data-section="product">Product</button>
+        <button data-section="whitelist">Whitelist</button>
+        <button data-section="logs">Logs</button>
+        <button data-section="guide">Panduan</button>
+      </nav>
+      <div class="sidebar-note">
+        <h2>Tip Cepat</h2>
+        <p>Login dulu, lalu gunakan tombol generate script untuk copy ke Roblox Studio.</p>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <div class="top-bar">
+        <div class="page-title">
+          <h2>Roblox Whitelist Dashboard</h2>
+          <p>Login untuk mulai membuat script dan whitelist.</p>
+        </div>
+        <div class="user-box">
+          <span id="userNameLabel">Guest</span>
+          <button id="logoutBtn" class="ghost-button hidden">Logout</button>
+        </div>
+      </div>
+
+      <section id="authScreen" class="auth-screen">
+        <div class="auth-card">
+          <h3>Masuk atau Daftar</h3>
+          <div class="auth-tabs">
+            <button id="tabLogin" class="active">Login</button>
+            <button id="tabRegister">Register</button>
+          </div>
+
+          <form id="loginForm" class="auth-form">
+            <label>Username</label>
+            <input id="loginUsername" type="text" placeholder="Username" autocomplete="username" />
+            <label>Password</label>
+            <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" />
+            <button id="loginBtn" type="button">Login</button>
+          </form>
+
+          <form id="registerForm" class="auth-form hidden">
+            <label>Username</label>
+            <input id="registerUsername" type="text" placeholder="Username baru" autocomplete="username" />
+            <label>Password</label>
+            <input id="registerPassword" type="password" placeholder="Password" autocomplete="new-password" />
+            <label>Confirm Password</label>
+            <input id="registerPasswordConfirm" type="password" placeholder="Ulangi password" autocomplete="new-password" />
+            <button id="registerBtn" type="button">Register</button>
+          </form>
+
+          <p class="auth-note">Akun hanya disimpan lokal di browser. Login untuk melanjutkan.</p>
+        </div>
+      </section>
+
+      <section id="dashboardScreen" class="dashboard-screen hidden">
+        <div class="dashboard-grid">
+          <div class="card summary-card">
+            <h3>Selamat datang, <span id="dashboardUser">Player</span></h3>
+            <p>Mulai dengan menambahkan product terlebih dahulu, lalu atur whitelist profile atau group.</p>
+          </div>
+          <div class="card summary-card accent-card">
+            <h3>Tip</h3>
+            <p>Klik <strong>Add Product</strong> untuk generate script, lalu copy ke Roblox Studio.</p>
+          </div>
+        </div>
+
+        <section id="dashboard" class="card panel hidden">
+          <h3>Overview</h3>
+          <div class="overview-grid">
+            <div>
+              <span>Product tersimpan</span>
+              <strong id="productCount">0</strong>
+            </div>
+            <div>
+              <span>Whitelist</span>
+              <strong id="whitelistCount">0</strong>
+            </div>
+            <div>
+              <span>HTTP Requests</span>
+              <strong id="httpStatus">Off</strong>
+            </div>
+          </div>
+        </section>
+
+        <section id="product" class="card panel hidden">
+          <div class="card-header">
+            <div>
+              <h3>1. Add Product</h3>
+              <p>Masukkan nama product untuk generate script otomatis.</p>
+            </div>
+          </div>
+          <div class="panel-row">
+            <input id="productName" type="text" placeholder="Nama product" />
+            <button id="addProductBtn">Add Product</button>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="productList"></tbody>
+            </table>
+          </div>
+          <div class="script-box">
+            <div class="script-header">
+              <h4>Generated Script</h4>
+              <div class="script-actions">
+                <button id="copyScriptBtn">Copy Script</button>
+                <button id="obfuscateBtn">Obfuscate Script</button>
+              </div>
+            </div>
+            <textarea id="generatedScript" readonly></textarea>
+          </div>
+        </section>
+
+        <section id="whitelist" class="card panel hidden">
+          <div class="card-header">
+            <div>
+              <h3>2. Add Whitelist</h3>
+              <p>Tambahkan link profil atau grup Roblox.</p>
+            </div>
+          </div>
+          <div class="panel-row">
+            <input id="whitelistLink" type="text" placeholder="Link profil atau grup Roblox" />
+            <button id="addWhitelistBtn">Add Whitelist</button>
+          </div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Entry</th>
+                  <th>Jenis</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="whitelistList"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="logs" class="card panel hidden">
+          <div class="card-header">
+            <div>
+              <h3>3. Logs & Status</h3>
+              <p>Monitor aktivitas dan status Http.</p>
+            </div>
+          </div>
+          <div class="status-row">
+            <label class="toggle-label">
+              <input id="allowHttpRequests" type="checkbox" />
+              <span>Allow HTTP Requests</span>
+            </label>
+          </div>
+          <div class="log-box">
+            <div id="logOutput"></div>
+          </div>
+        </section>
+
+        <section id="guide" class="card panel hidden">
+          <div class="card-header">
+            <div>
+              <h3>4. Panduan Singkat</h3>
+              <p>Step-by-step untuk tes script Roblox.</p>
+            </div>
+          </div>
+          <div class="steps-grid">
+            <div class="step-card">
+              <strong>1</strong>
+              <p>Login dulu, lalu buat product.</p>
+            </div>
+            <div class="step-card">
+              <strong>2</strong>
+              <p>Copy script dari kotak Generated Script.</p>
+            </div>
+            <div class="step-card">
+              <strong>3</strong>
+              <p>Paste ke Roblox Studio di ServerScriptService.</p>
+            </div>
+            <div class="step-card">
+              <strong>4</strong>
+              <p>Aktifkan Allow HTTP Requests dan jalankan test.</p>
+            </div>
+          </div>
+          <p class="note">UI login/register sudah ditambahkan. Kamu bisa logout kapan saja.</p>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
